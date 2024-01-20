@@ -55,7 +55,7 @@ export type $RedirectResponse = $RedirectParams;
 
 export type $NavigationService = {
   readonly addListener: (listener: $Listener) => number;
-  readonly getCurrentPathname: () => null | string;
+  readonly getCurrentPathname: () => (null | string);
   readonly getSearchParams: () => Record<string, string | void>;
   readonly redirect: (arg0: $RedirectParams) => $RedirectResponse;
   readonly render: () => React.ReactNode;
@@ -75,7 +75,7 @@ const NavigationService: $NavigationService = {
       const params = new Proxy(
         new URLSearchParams(window.location.search),
         {
-          get: (searchParams, prop : string): string => searchParams.get(prop),
+          get: (searchParams, prop : string): string | void => searchParams.get(prop),
         },
       );
 
