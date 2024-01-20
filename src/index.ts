@@ -11,6 +11,8 @@ import type {
   NavigateFunction,
 } from 'react-router-dom';
 
+export type $Location = Location;
+
 type $Listener = (location: Location) => unknown;
 
 let globalNavigation: NavigateFunction | null = null;
