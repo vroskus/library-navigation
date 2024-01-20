@@ -3,6 +3,7 @@ import * as React from 'react';
 import {
   useLocation,
   useNavigate,
+  useParams,
 } from 'react-router-dom';
 
 // Types
@@ -60,6 +61,30 @@ export type $NavigationService = {
   readonly redirect: (arg0: $RedirectParams) => $RedirectResponse;
   readonly render: () => React.ReactNode;
 };
+
+export interface $WithRouter {
+  location: ReturnType<typeof useLocation>;
+  navigate: ReturnType<typeof useNavigate>;
+  params: Record<string, string | void>;
+}
+
+/** @deprecated Use `React Router hooks` instead */
+export const withRouter = <Props extends $WithRouter>(
+  Component: React.ComponentType<Props>,
+) => (props: Omit<Props, keyof $WithRouter>) => {
+    const location = useLocation();
+    const params = useParams();
+    const navigate = useNavigate();
+
+    return (
+      <Component
+        {...(props as Props)}
+        location={location}
+        navigate={navigate}
+        params={params}
+      />
+    );
+  };
 
 const NavigationService: $NavigationService = {
   addListener: (listener: $Listener) => listeners.push(listener),
