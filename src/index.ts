@@ -18,7 +18,7 @@ type $Listener = (location: Location) => unknown;
 let globalNavigation: NavigateFunction | null = null;
 const listeners: Array<$Listener> = [];
 
-const trackHistoryChange = (location: Location): void => {
+const trackNavigationChange = (location: Location): void => {
   listeners.forEach((listener: $Listener) => {
     listener(location);
   });
@@ -32,14 +32,14 @@ const Spy = () => {
     () => {
       globalNavigation = navigate;
 
-      trackHistoryChange(location);
+      trackNavigationChange(location);
     },
     [],
   );
 
   React.useEffect(
     () => {
-      trackHistoryChange(location);
+      trackNavigationChange(location);
     },
     [location],
   );
@@ -53,7 +53,7 @@ export type $RedirectParams = {
 };
 export type $RedirectResponse = $RedirectParams;
 
-export type $HistoryService = {
+export type $NavigationService = {
   readonly addListener: (listener: $Listener) => number;
   readonly getCurrentPathname: () => null | string;
   readonly getSearchParams: () => Record<string, string | void>;
@@ -61,7 +61,7 @@ export type $HistoryService = {
   readonly render: () => React.Component;
 };
 
-const HistoryService: $HistoryService = {
+const NavigationService: $NavigationService = {
   addListener: (listener: $Listener) => listeners.push(listener),
   getCurrentPathname: () => {
     if (window && window.location) {
@@ -105,4 +105,4 @@ const HistoryService: $HistoryService = {
   render: Spy,
 };
 
-export default HistoryService;
+export default NavigationService;
