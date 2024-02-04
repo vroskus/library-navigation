@@ -1,6 +1,7 @@
 // Global Components
 import * as React from 'react';
 import {
+  createSearchParams,
   useLocation,
   useNavigate,
   useParams,
@@ -50,6 +51,7 @@ const Spy = () => {
 
 export type $RedirectParams = {
   pathname: string;
+  search?: Record<string, string>;
   state?: unknown;
 };
 export type $RedirectResponse = $RedirectParams;
@@ -114,11 +116,24 @@ const NavigationService: $NavigationService = {
     if (globalNavigation !== null) {
       const {
         pathname,
+        search,
         state,
       } = params;
 
+      let path: {
+        pathname: string,
+        search: string,
+      } | string = pathname;
+
+      if (search) {
+        path = {
+          pathname,
+          search: createSearchParams(search).toString(),
+        };
+      }
+
       globalNavigation(
-        pathname,
+        path,
         {
           state,
         },
