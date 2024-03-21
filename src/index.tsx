@@ -56,12 +56,18 @@ export type $RedirectParams = {
 };
 export type $RedirectResponse = $RedirectParams;
 
+export type $ReplaceParams = {
+  pathname: string;
+};
+export type $ReplaceResponse = $ReplaceParams;
+
 export type $NavigationService = {
   readonly addListener: (listener: $Listener) => number;
   readonly getCurrentPathname: () => (null | string);
   readonly getSearchParams: () => Record<string, string | void>;
   readonly redirect: (arg0: $RedirectParams) => $RedirectResponse;
   readonly render: () => React.ReactNode;
+  readonly replace: (arg0: $ReplaceParams) => $ReplaceResponse;
 };
 
 export interface $WithRouter {
@@ -143,6 +149,17 @@ const NavigationService: $NavigationService = {
     return params;
   },
   render: Spy,
+  replace: (params: $ReplaceParams): $RedirectResponse => {
+    if (window && window.history) {
+      window.history.replaceState(
+        null,
+        '',
+        params.pathname,
+      );
+    }
+
+    return params;
+  },
 };
 
 export default NavigationService;
