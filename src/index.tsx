@@ -49,6 +49,8 @@ const Spy = () => {
   return null;
 };
 
+type $SearchParams = Record<string, string | undefined>;
+
 export type $RedirectParams = {
   pathname: string;
   search?: Record<string, string>;
@@ -64,7 +66,7 @@ export type $ReplaceResponse = $ReplaceParams;
 export type $NavigationService = {
   readonly addListener: (listener: $Listener) => number;
   readonly getCurrentPathname: () => (null | string);
-  readonly getSearchParams: () => Record<string, string | void>;
+  readonly getSearchParams: () => $SearchParams;
   readonly redirect: (arg0: $RedirectParams) => $RedirectResponse;
   readonly render: () => React.ReactNode;
   readonly replace: (arg0: $ReplaceParams) => $ReplaceResponse;
@@ -73,7 +75,7 @@ export type $NavigationService = {
 export interface $WithRouter {
   location: ReturnType<typeof useLocation>;
   navigate: ReturnType<typeof useNavigate>;
-  params: Record<string, string | void>;
+  params: $SearchParams;
 }
 
 /** @deprecated Use `React Router hooks` instead */
@@ -108,7 +110,7 @@ const NavigationService: $NavigationService = {
       const params = new Proxy(
         new URLSearchParams(window.location.search),
         {
-          get: (searchParams, prop : string): string | void => searchParams.get(prop),
+          get: (searchParams, prop : string): null | string => searchParams.get(prop),
         },
       );
 
