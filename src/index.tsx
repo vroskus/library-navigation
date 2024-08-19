@@ -107,14 +107,12 @@ const NavigationService: $NavigationService = {
   },
   getSearchParams: () => {
     if (window && window.location) {
-      const params = new Proxy(
+      return new Proxy(
         new URLSearchParams(window.location.search),
         {
           get: (searchParams, prop : string): null | string => searchParams.get(prop),
         },
       );
-
-      return params;
     }
 
     return {
