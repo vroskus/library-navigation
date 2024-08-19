@@ -21,12 +21,12 @@
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-router-dom": "^6.23.0"
+    "react-router-dom": "^6.26.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.10",
-    "@types/react": "^18.3.1",
+    "@types/node": "^22.4.1",
+    "@types/react": "^18.3.3",
     "@vroskus/eslint-config": "^1.0.11",
     "typescript": "^5.4.5"
   }
