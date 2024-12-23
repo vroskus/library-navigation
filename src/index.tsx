@@ -49,6 +49,7 @@ const Spy = () => {
   return null;
 };
 
+/* eslint-disable perfectionist/sort-modules */
 type $SearchParams = Record<string, string | undefined>;
 
 export type $RedirectParams = {
@@ -56,23 +57,21 @@ export type $RedirectParams = {
   search?: Record<string, string>;
   state?: unknown;
 };
-export type $RedirectResponse = $RedirectParams;
 
 export type $ReplaceParams = {
   pathname: string;
 };
-export type $ReplaceResponse = $ReplaceParams;
 
 export type $NavigationService = {
   readonly addListener: (listener: $Listener) => number;
   readonly getCurrentPathname: () => (null | string);
   readonly getSearchParams: () => $SearchParams;
-  readonly redirect: (arg0: $RedirectParams) => $RedirectResponse;
+  readonly redirect: (arg0: $RedirectParams) => $RedirectParams;
   readonly render: () => React.ReactNode;
-  readonly replace: (arg0: $ReplaceParams) => $ReplaceResponse;
+  readonly replace: (arg0: $ReplaceParams) => $ReplaceParams;
 };
 
-export interface $WithRouter {
+export type $WithRouter = {
   location: ReturnType<typeof useLocation>;
   navigate: ReturnType<typeof useNavigate>;
   params: $SearchParams;
@@ -118,7 +117,7 @@ const NavigationService: $NavigationService = {
     return {
     };
   },
-  redirect: (params: $RedirectParams): $RedirectResponse => {
+  redirect: (params: $RedirectParams): $RedirectParams => {
     if (globalNavigation !== null) {
       const {
         pathname,
@@ -126,10 +125,10 @@ const NavigationService: $NavigationService = {
         state,
       } = params;
 
-      let path: {
-        pathname: string,
-        search: string,
-      } | string = pathname;
+      let path: string | {
+        pathname: string;
+        search: string;
+      } = pathname;
 
       if (search) {
         path = {
@@ -149,7 +148,7 @@ const NavigationService: $NavigationService = {
     return params;
   },
   render: Spy,
-  replace: (params: $ReplaceParams): $RedirectResponse => {
+  replace: (params: $ReplaceParams): $ReplaceParams => {
     if (window && window.history) {
       window.history.replaceState(
         null,

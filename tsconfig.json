@@ -16,7 +16,8 @@
       "dom",
       "es6"
     ],
-    "jsx": "react"
+    "jsx": "react",
+    "skipLibCheck": true
   },
   "exclude": [
     "node_modules",
