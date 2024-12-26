@@ -49,7 +49,6 @@ const Spy = () => {
   return null;
 };
 
-/* eslint-disable perfectionist/sort-modules */
 type $SearchParams = Record<string, string | undefined>;
 
 export type $RedirectParams = {
