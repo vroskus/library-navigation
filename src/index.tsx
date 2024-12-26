@@ -57,17 +57,21 @@ export type $RedirectParams = {
   state?: unknown;
 };
 
+export type $RedirectResponse = $RedirectParams;
+
 export type $ReplaceParams = {
   pathname: string;
 };
+
+export type $ReplaceResponse = $ReplaceParams;
 
 export type $NavigationService = {
   readonly addListener: (listener: $Listener) => number;
   readonly getCurrentPathname: () => (null | string);
   readonly getSearchParams: () => $SearchParams;
-  readonly redirect: (arg0: $RedirectParams) => $RedirectParams;
+  readonly redirect: (arg0: $RedirectParams) => $RedirectResponse;
   readonly render: () => React.ReactNode;
-  readonly replace: (arg0: $ReplaceParams) => $ReplaceParams;
+  readonly replace: (arg0: $ReplaceParams) => $ReplaceResponse;
 };
 
 export type $WithRouter = {
@@ -116,7 +120,7 @@ const NavigationService: $NavigationService = {
     return {
     };
   },
-  redirect: (params: $RedirectParams): $RedirectParams => {
+  redirect: (params: $RedirectParams): $RedirectResponse => {
     if (globalNavigation !== null) {
       const {
         pathname,
@@ -147,7 +151,7 @@ const NavigationService: $NavigationService = {
     return params;
   },
   render: Spy,
-  replace: (params: $ReplaceParams): $ReplaceParams => {
+  replace: (params: $ReplaceParams): $ReplaceResponse => {
     if (window && window.history) {
       window.history.replaceState(
         null,
