@@ -26,7 +26,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
-    "@types/react": "^19.0.2",
+    "@types/react": "^18.3.3",
     "@vroskus/eslint-config": "^1.0.23",
     "typescript": "^5.7.2"
   }
