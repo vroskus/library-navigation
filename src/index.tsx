@@ -18,7 +18,8 @@ export type $Location = Location;
 type $Listener = (location: Location) => unknown;
 
 let globalNavigation: NavigateFunction | null = null;
-const listeners: Array<$Listener> = [];
+const listeners: Array<$Listener> = [
+];
 
 const trackNavigationChange = (location: Location): void => {
   listeners.forEach((listener: $Listener) => {
@@ -36,14 +37,17 @@ const Spy = () => {
 
       trackNavigationChange(location);
     },
-    [],
+    [
+    ],
   );
 
   React.useEffect(
     () => {
       trackNavigationChange(location);
     },
-    [location],
+    [
+      location,
+    ],
   );
 
   return null;
